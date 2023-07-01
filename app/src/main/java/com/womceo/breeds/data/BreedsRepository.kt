@@ -1,6 +1,6 @@
 package com.womceo.breeds.data
 
-import com.womceo.breeds.data.model.DogResponse
+import com.womceo.breeds.data.model.RemoteDogResponse
 import com.womceo.breeds.data.model.RemoteBreedImages
 import com.womceo.breeds.data.remote.source.BreedRemote
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +10,7 @@ class BreedsRepository(
     private val remote: BreedRemote
 ) {
 
-    fun getBreedList(): Flow<DogResponse> = flow {
+    fun getBreedList(): Flow<RemoteDogResponse> = flow {
         val response = remote.getBreedList()
         emit(response)
     }
