@@ -1,8 +1,8 @@
 package com.womceo.breeds.presentation.list
 
 import com.womceo.breeds.data.BreedsRepository
-import com.womceo.breeds.data.factory.DogResponseFactory.makeDogResponse
-import com.womceo.breeds.data.factory.DogResponseFactory.makeRemoteDogResponse
+import com.womceo.breeds.factory.DogResponseFactory.makeDogResponse
+import com.womceo.breeds.factory.DogResponseFactory.makeRemoteDogResponse
 import com.womceo.breeds.data.model.RemoteDogResponse
 import com.womceo.breeds.presentation.list.events.ListUIntent.InitialUIntent
 import com.womceo.breeds.presentation.list.events.ListUiStates.DefaultLoadingUiState

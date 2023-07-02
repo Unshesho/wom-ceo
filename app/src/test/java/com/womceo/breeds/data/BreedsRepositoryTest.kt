@@ -1,7 +1,7 @@
 package com.womceo.breeds.data
 
-import com.womceo.breeds.data.factory.BreedImagesFactory.makeRemoteBreedImages
-import com.womceo.breeds.data.factory.DogResponseFactory.makeRemoteDogResponse
+import com.womceo.breeds.factory.BreedImagesFactory.makeRemoteBreedImages
+import com.womceo.breeds.factory.DogResponseFactory.makeRemoteDogResponse
 import com.womceo.breeds.data.model.RemoteBreedImages
 import com.womceo.breeds.data.model.RemoteDogResponse
 import com.womceo.breeds.data.remote.source.BreedRemote

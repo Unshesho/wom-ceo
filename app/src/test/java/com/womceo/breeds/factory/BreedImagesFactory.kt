@@ -1,4 +1,4 @@
-package com.womceo.breeds.data.factory
+package com.womceo.breeds.factory
 
 import com.womceo.breeds.data.model.RemoteBreedImages
 import com.womceo.utils.randomfactory.RandomFactory.generateRandomString
