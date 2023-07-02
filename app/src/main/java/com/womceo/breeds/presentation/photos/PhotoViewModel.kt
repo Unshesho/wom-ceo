@@ -1,13 +1,13 @@
-package com.womceo.breeds.presentation.list
+package com.womceo.breeds.presentation.photos
 
 import com.womceo.breeds.data.BreedsRepository
-import com.womceo.breeds.presentation.list.events.ListUIntent
-import com.womceo.breeds.presentation.list.events.ListUIntent.InitialUIntent
-import com.womceo.breeds.presentation.list.events.ListUiStates
-import com.womceo.breeds.presentation.list.events.ListUiStates.DefaultLoadingUiState
-import com.womceo.breeds.presentation.list.events.ListUiStates.DisplayListUiState
-import com.womceo.breeds.presentation.list.events.ListUiStates.ErrorUiState
-import com.womceo.breeds.presentation.list.mapper.ListMapper
+import com.womceo.breeds.presentation.photos.events.PhotoUIntent
+import com.womceo.breeds.presentation.photos.events.PhotoUIntent.SeeBreedPhotosUIntent
+import com.womceo.breeds.presentation.photos.events.PhotoUiStates
+import com.womceo.breeds.presentation.photos.events.PhotoUiStates.DefaultLoadingUiState
+import com.womceo.breeds.presentation.photos.events.PhotoUiStates.DisplayBreedImages
+import com.womceo.breeds.presentation.photos.events.PhotoUiStates.ErrorUiState
+import com.womceo.breeds.presentation.photos.mapper.PhotoMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -23,16 +23,16 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlin.coroutines.CoroutineContext
 
-class ListViewModel(
-    private val mapper: ListMapper,
+class PhotoViewModel(
+    private val mapper: PhotoMapper,
     private val repository: BreedsRepository,
     private val coroutineContext: CoroutineContext = Dispatchers.IO
 ) {
     private val defaultUiState = DefaultLoadingUiState
-    private val uiState = MutableStateFlow<ListUiStates>(defaultUiState)
+    private val uiState = MutableStateFlow<PhotoUiStates>(defaultUiState)
 
     fun processUserIntents(
-        userIntents: Flow<ListUIntent>,
+        userIntents: Flow<PhotoUIntent>,
         coroutineScope: CoroutineScope
     ) {
         userIntents.buffer()
@@ -45,20 +45,19 @@ class ListViewModel(
             .launchIn(coroutineScope)
     }
 
-    private fun ListUIntent.handleUserIntent(): Flow<ListUiStates> =
+    private fun PhotoUIntent.handleUserIntent(): Flow<PhotoUiStates> =
         when (this) {
-            InitialUIntent -> getBreedList()
+            is SeeBreedPhotosUIntent -> getBreedImages(breedName)
         }
 
-    private fun getBreedList(): Flow<ListUiStates> =
-        repository.getBreedList().map { response ->
-            val breedList = with(mapper) { response.toPresentation() }
-            DisplayListUiState(breedList= breedList.breeds) as ListUiStates
+    private fun getBreedImages(breedName: String): Flow<PhotoUiStates> =
+        repository.getBreedImages(breedName).map { response ->
+            val breedImages = with(mapper) { response.toPresentation() }
+           DisplayBreedImages(breedImages = breedImages) as PhotoUiStates
         }
             .onStart { emit(defaultUiState) }
             .catch { emit(ErrorUiState) }
             .flowOn(coroutineContext)
 
-    fun uiState(): StateFlow<ListUiStates> = uiState
-
+    fun uiState(): StateFlow<PhotoUiStates> = uiState
 }
