@@ -43,14 +43,11 @@ internal class PhotoViewModelTest {
             val remoteBreedImages = makeRemoteBreedImages(3)
             stubGetBreedImages(breedName,remoteBreedImages)
 
-            viewModel.processUserIntents(
-                userIntents = flow { emit(userIntent) },
-                coroutineScope = this
+            val result = viewModel.processUserIntents(
+                userIntents = flow { emit(userIntent) }
             )
 
-            val result = viewModel.uiState().first()
-
-            Assert.assertTrue(result is PhotoUiStates.DefaultLoadingUiState)
+            Assert.assertTrue(result.first() is PhotoUiStates.DefaultLoadingUiState)
         }
 
     @Test
@@ -63,14 +60,11 @@ internal class PhotoViewModelTest {
             stubGetBreedImages(breedName,remoteBreedImages)
             stubMapper(remoteBreedImages, breedImages)
 
-            viewModel.processUserIntents(
-                userIntents = flow { emit(userIntent) },
-                coroutineScope = this
+            val result = viewModel.processUserIntents(
+                userIntents = flow { emit(userIntent) }
             )
 
-            val result = viewModel.uiState().take(2).last()
-
-            Assert.assertTrue(result is DisplayBreedImages)
+            Assert.assertTrue(result.take(2).last() is DisplayBreedImages)
         }
 
     @Test
@@ -81,14 +75,11 @@ internal class PhotoViewModelTest {
             val remoteBreedImages = makeRemoteBreedImages(3)
             stubGetBreedImages(breedName,remoteBreedImages)
 
-            viewModel.processUserIntents(
-                userIntents = flow { emit(userIntent) },
-                coroutineScope = this
+            val result = viewModel.processUserIntents(
+                userIntents = flow { emit(userIntent) }
             )
 
-            val result = viewModel.uiState().take(2).last()
-
-            Assert.assertTrue(result is ErrorUiState)
+            Assert.assertTrue(result.take(2).last() is ErrorUiState)
         }
 
     private fun stubGetBreedImages(breedName: String, remote: RemoteBreedImages) {

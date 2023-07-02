@@ -1,5 +1,6 @@
 package com.womceo.breeds.presentation.photos
 
+import androidx.lifecycle.ViewModel
 import com.womceo.breeds.data.BreedsRepository
 import com.womceo.breeds.presentation.photos.events.PhotoUIntent
 import com.womceo.breeds.presentation.photos.events.PhotoUIntent.SeeBreedPhotosUIntent
@@ -27,23 +28,17 @@ class PhotoViewModel(
     private val mapper: PhotoMapper,
     private val repository: BreedsRepository,
     private val coroutineContext: CoroutineContext = Dispatchers.IO
-) {
-    private val defaultUiState = DefaultLoadingUiState
+) : ViewModel() {
+    val defaultUiState = DefaultLoadingUiState
     private val uiState = MutableStateFlow<PhotoUiStates>(defaultUiState)
 
     fun processUserIntents(
         userIntents: Flow<PhotoUIntent>,
-        coroutineScope: CoroutineScope
-    ) {
+    ) =
         userIntents.buffer()
             .flatMapMerge { userIntent ->
                 userIntent.handleUserIntent()
             }
-            .onEach {
-                uiState.value = it
-            }
-            .launchIn(coroutineScope)
-    }
 
     private fun PhotoUIntent.handleUserIntent(): Flow<PhotoUiStates> =
         when (this) {
@@ -53,7 +48,7 @@ class PhotoViewModel(
     private fun getBreedImages(breedName: String): Flow<PhotoUiStates> =
         repository.getBreedImages(breedName).map { response ->
             val breedImages = with(mapper) { response.toPresentation() }
-           DisplayBreedImages(breedImages = breedImages) as PhotoUiStates
+            DisplayBreedImages(breedImages = breedImages) as PhotoUiStates
         }
             .onStart { emit(defaultUiState) }
             .catch { emit(ErrorUiState) }

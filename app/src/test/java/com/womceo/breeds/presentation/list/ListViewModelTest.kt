@@ -40,14 +40,11 @@ internal class ListViewModelTest {
             val remoteDogResponse = makeRemoteDogResponse()
             stubGetBreedList(remoteDogResponse)
 
-            viewModel.processUserIntents(
-                userIntents = flow { emit(userIntent) },
-                coroutineScope = this
+            val result = viewModel.processUserIntents(
+                userIntents = flow { emit(userIntent) }
             )
 
-            val result = viewModel.uiState().first()
-
-            assertTrue(result is DefaultLoadingUiState)
+            assertTrue(result.first() is DefaultLoadingUiState)
         }
 
     @Test
@@ -59,14 +56,11 @@ internal class ListViewModelTest {
             stubGetBreedList(remoteDogResponse)
             stubMapper(remoteDogResponse, dogResponse)
 
-            viewModel.processUserIntents(
-                userIntents = flow { emit(userIntent) },
-                coroutineScope = this
+            val result = viewModel.processUserIntents(
+                userIntents = flow { emit(userIntent) }
             )
 
-            val result = viewModel.uiState().take(2).last()
-
-            assertTrue(result is DisplayListUiState)
+            assertTrue(result.take(2).last() is DisplayListUiState)
         }
 
     @Test
@@ -75,13 +69,10 @@ internal class ListViewModelTest {
         val remoteDogResponse = makeRemoteDogResponse()
         stubGetBreedList(remoteDogResponse)
 
-        viewModel.processUserIntents(
-            userIntents = flow { emit(userIntent) },
-            coroutineScope = this
+        val result = viewModel.processUserIntents(
+            userIntents = flow { emit(userIntent) }
         )
-        val result = viewModel.uiState().take(2).last()
-
-        assertTrue(result is ErrorUiState)
+        assertTrue(result.take(2).last() is ErrorUiState)
     }
 
     private fun stubGetBreedList(remote: RemoteDogResponse) {
