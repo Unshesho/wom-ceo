@@ -14,7 +14,6 @@ import com.womceo.breeds.presentation.list.events.ListUiStates.ErrorUiState
 import com.womceo.breeds.ui.commons.ErrorScreen
 import com.womceo.breeds.ui.commons.LoadingScreen
 import com.womceo.breeds.ui.list.components.ListButton
-import com.womceo.breeds.ui.navigation.Constants.BREED_NAME
 import com.womceo.breeds.ui.navigation.NavActions
 
 @Composable

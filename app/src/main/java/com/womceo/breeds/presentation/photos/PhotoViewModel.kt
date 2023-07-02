@@ -9,7 +9,6 @@ import com.womceo.breeds.presentation.photos.events.PhotoUiStates.DefaultLoading
 import com.womceo.breeds.presentation.photos.events.PhotoUiStates.DisplayBreedImages
 import com.womceo.breeds.presentation.photos.events.PhotoUiStates.ErrorUiState
 import com.womceo.breeds.presentation.photos.mapper.PhotoMapper
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,9 +17,7 @@ import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlin.coroutines.CoroutineContext
 

@@ -4,7 +4,6 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.womceo.breeds.data.BreedsRepository
-import com.womceo.breeds.presentation.list.mapper.ListMapper
 import com.womceo.breeds.presentation.photos.mapper.PhotoMapper
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
