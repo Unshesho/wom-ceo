@@ -33,23 +33,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    override fun onStart() {
-        super.onStart()
-        val api = WebServiceFactory(BreedsWebService::class.java).createRemoteWebServiceConfig()
-        val remote = BreedRemoteImpl(api)
-        val repository = BreedsRepository(remote)
-
-        lifecycleScope.launch {
-            repository.getBreedList().collect { response ->
-                for ((breed, subBreeds) in response.message) {
-                    println("Breed: $breed")
-                    println("Sub-breeds: ${subBreeds.joinToString()}")
-                    println("----------------------")
-                }
-            }
-        }
-    }
 }
 
 @Composable
